@@ -40,5 +40,5 @@ RUN php artisan config:cache && \
 # Expose port 9000 (PHP-FPM)
 EXPOSE 9000
 
-# Start PHP-FPM
-CMD ["php-fpm"]
+# Start Laravel's built-in HTTP server
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=9000"]
