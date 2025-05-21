@@ -23,4 +23,22 @@ RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - && \
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# Set working directory
 WORKDIR /var/www
+
+# Copy application source
+COPY . .
+
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader
+
+# Laravel optimizations (optional but recommended)
+RUN php artisan config:cache && \
+    php artisan route:cache && \
+    php artisan view:cache
+
+# Expose port 9000 (PHP-FPM)
+EXPOSE 9000
+
+# Start PHP-FPM
+CMD ["php-fpm"]
