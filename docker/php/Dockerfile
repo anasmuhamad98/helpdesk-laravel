@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     zip unzip curl git \
     libzip-dev libpq-dev libicu-dev \
-    && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip intl
+    && docker-php-ext-install pdo pdo_pgsql pgsql mbstring exif pcntl bcmath gd zip intl
 
 # Install Node.js and Composer
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - && apt-get install -y nodejs
@@ -30,10 +30,7 @@ RUN composer install --no-dev --optimize-autoloader && \
     php artisan view:cache
 
 # Install frontend dependencies
-RUN npm install
-
-# Run npm build (compile assets, etc.)
-RUN npm run build
+RUN npm install && npm run build
 
 # Copy nginx config
 COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
