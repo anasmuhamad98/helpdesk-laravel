@@ -1,44 +1,42 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 
-// Check environment variables
-const isHttps = process.env.VITE_USE_HTTPS === 'true';
+// Get the base URL from environment variables (you can set this in your .env file)
 const baseUrl = process.env.VITE_APP_URL || '/';
 
-export default defineConfig(() => {
-    const commonConfig = {
-        plugins: [
-            laravel({
-                input: [
-                    'resources/css/app.css',
-                    'resources/js/app.js',
-                ],
-                refresh: true,
-            }),
-        ],
-    };
-
-    if (isHttps) {
-        return {
-            ...commonConfig,
-            base: baseUrl,
-            server: {
-                https: true,
+export default defineConfig({
+    plugins: [
+        laravel({
+            input: ['resources/css/app.css', 'resources/js/app.js'],
+            refresh: true,
+        }),
+    ],
+    base: baseUrl,  // Ensuring assets are generated with the correct base URL
+    server: {
+        https: true, // Use HTTPS for the development server
+    },
+    build: {
+        // Ensures assets are built with the correct public path
+        rollupOptions: {
+            output: {
+                assetFileNames: 'assets/[name].[hash][extname]',
             },
-            build: {
-                rollupOptions: {
-                    output: {
-                        assetFileNames: 'assets/[name].[hash][extname]',
-                    },
-                },
-            },
-        };
-    } else {
-        return {
-            ...commonConfig,
-            server: {
-                https: false,
-            },
-        };
-    }
+        },
+    },
 });
+
+
+// import { defineConfig } from 'vite';
+// import laravel from 'laravel-vite-plugin';
+
+// export default defineConfig({
+//     plugins: [
+//         laravel({
+//             input: [
+//                 'resources/css/app.css',
+//                 'resources/js/app.js',
+//             ],
+//             refresh: true,
+//         }),
+//     ],
+// });
