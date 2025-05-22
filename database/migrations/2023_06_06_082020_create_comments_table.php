@@ -14,8 +14,8 @@ return new class extends Migration {
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('tiket_id')->index('tiket_id');
-            $table->unsignedBigInteger('user_id')->index('user_id');
+            $table->bigInteger('tiket_id')->index('tiket_id');
+            $table->bigInteger('user_id')->index('user_id');
             $table->text('comment');
             $table->timestamps();
             $table->softDeletes();

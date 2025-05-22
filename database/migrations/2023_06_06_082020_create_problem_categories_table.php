@@ -14,7 +14,7 @@ return new class extends Migration {
     {
         Schema::create('problem_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('unit_id')->index('unit_id');
+            $table->bigInteger('unit_id')->index('unit_id');
             $table->string('name');
             $table->timestamps();
             $table->softDeletes();

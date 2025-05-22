@@ -13,7 +13,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::table('problem_categories', function (Blueprint $table) {
-            $table->foreign(['unit_id'], 'problem_categories_ibfk_1')->references(['id'])->on('units')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            $table->foreign(['unit_id'], 'problem_categories_ibfk_1')->references(['id'])->on('units')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
